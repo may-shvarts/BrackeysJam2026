@@ -1,4 +1,5 @@
 {
+    "version": 1,
     "name": "InputSystem_Actions",
     "maps": [
         {
@@ -986,6 +987,34 @@
                     "processors": "",
                     "groups": "XR",
                     "action": "TrackedDeviceOrientation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "CheatCodes",
+            "id": "c6f1dbe5-98cc-48ea-bbb0-a074f326908d",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "816c5e50-8be1-4637-93ec-d56a81e5e36a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9e9a19cb-f52e-4f98-bb9c-9ea000f0f5a7",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
