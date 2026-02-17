@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class ElevatorController : MonoBehaviour
     
     [Header("Camera Settings")]
     [SerializeField] private Transform cameraTarget;
+    
+    [SerializeField] private String playerTag = "Player";
 
     void OnEnable()
     {
@@ -29,10 +32,11 @@ public class ElevatorController : MonoBehaviour
             cameraTarget.DOMoveY(cameraTarget.position.y + floorHeight, moveDuration)
                 .SetEase(Ease.InOutSine);
         }
-    } 
+    }
+    /*
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(playerTag))
         {
             other.transform.SetParent(transform);
         }
@@ -40,9 +44,10 @@ public class ElevatorController : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag(playerTag))
         {
             other.transform.SetParent(null);
         }
     }
+    */
 }

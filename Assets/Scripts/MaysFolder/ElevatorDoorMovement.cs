@@ -8,6 +8,7 @@ public class ElevatorDoorMovement : MonoBehaviour
     [SerializeField] private float endXPos = 5.65f;
     
     [SerializeField] private float secToWaitElevatorEnter = 2f;
+    [SerializeField] private float secToTriggerGoingUp = 4f;
     void Start()
     {
         MoveElevatorDoor();
@@ -31,8 +32,11 @@ public class ElevatorDoorMovement : MonoBehaviour
         DOVirtual.DelayedCall(secToWaitElevatorEnter, () => 
         {
             transform.DOMoveX(startXPos, duration)
-                .SetEase(Ease.InOutQuad);
+                .SetEase(Ease.OutCubic);
         });
-        EventManagement.OnFloorChange?.Invoke();
+        DOVirtual.DelayedCall(secToTriggerGoingUp, () => 
+        {
+            EventManagement.OnFloorChange?.Invoke(); 
+        });
     }
 }
