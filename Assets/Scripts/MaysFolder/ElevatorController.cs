@@ -35,16 +35,39 @@ public class ElevatorController : MonoBehaviour
     //Status
     private bool _isPlayerInside = false;
     private bool _isMoving = false;
-    private bool _requiresKeyRelease = false; 
+    private bool _requiresKeyRelease = false;
+    
+    //TODO: use this in order to let the player move forward with the level
+    private bool _canEnterFirstDoor = false;
+    private bool _canEnterLastDoor = false;
     
     void Start()
     {
         EventManagement.CurrentFloor = currentFloor;
     }
     //Signing to Keys events
-    void OnEnable()  => verticalInput.Enable();
-    void OnDisable() => verticalInput.Disable();
+    void OnEnable()
+    {
+        EventManagement.OnFirstCollectedItem += UpdateFirstDoorEnter;
+        EventManagement.OnLastCollectedItem += UpdateLastDoorEnter;
+        verticalInput.Enable();
+    }
 
+    void OnDisable()
+    {
+        EventManagement.OnFirstCollectedItem -= UpdateFirstDoorEnter;
+        EventManagement.OnLastCollectedItem -= UpdateLastDoorEnter;
+        verticalInput.Disable();
+    }
+
+    private void UpdateFirstDoorEnter()
+    {
+        _canEnterFirstDoor = true;
+    }
+    private void UpdateLastDoorEnter()
+    {
+        _canEnterLastDoor = true;
+    }
     void Update()
     {
         if (!_isPlayerInside || _isMoving) return;
@@ -116,8 +139,11 @@ public class ElevatorController : MonoBehaviour
         }
 
         EventManagement.OnElevatorArrived?.Invoke(currentFloor);
-        EventManagement.OnPlayerUnfreeze?.Invoke(); // ← unfreeze after arrival
+        
+        //Wait for the door to actually open before giving control back
+        yield return new WaitForSeconds(doorsWaitDuration); 
 
+        EventManagement.OnPlayerUnfreeze?.Invoke();
         _isMoving = false;
     }
     

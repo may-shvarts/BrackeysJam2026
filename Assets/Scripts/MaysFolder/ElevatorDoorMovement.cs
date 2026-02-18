@@ -1,3 +1,4 @@
+using System.Collections;
 using DG.Tweening;
 using UnityEngine;
 
@@ -60,14 +61,21 @@ public class ElevatorDoorMovement : MonoBehaviour
     private void OnArrived(int arrivalFloor)
     {
         if (arrivalFloor != myFloor) return;
-        SetSorting(defaultSortingOrder);
+        SetSorting(frontSortingOrder);
+        StartCoroutine(ResetSortingAfterDelay(openDuration));
         Open();
     }
 
+    private IEnumerator ResetSortingAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        SetSorting(defaultSortingOrder);
+    }
+    
     private void Open()
     {
         // FIX: Kill any active movement tweens on this object so they don't fight
-        transform.DOKill(); 
+        transform.DOKill();
         transform.DOMoveX(openXPos, openDuration).SetEase(Ease.InOutQuad);
     }
 
