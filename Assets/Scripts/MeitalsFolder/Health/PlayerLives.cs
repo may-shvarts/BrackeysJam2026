@@ -52,6 +52,7 @@ public class PlayerLives : MonoBehaviour
     {
         _currentLives--;
         _invulnerableTimer = invulnerableTime;
+        EventManagement.OnLivesChanged?.Invoke(_currentLives);
 
         // Always respawn after a hit
         Respawn();
@@ -61,6 +62,7 @@ public class PlayerLives : MonoBehaviour
         {
             EventManagement.OnPlayerDied?.Invoke();
             _currentLives = maxLives;
+            EventManagement.OnLivesChanged?.Invoke(_currentLives);
         }
     }
 
