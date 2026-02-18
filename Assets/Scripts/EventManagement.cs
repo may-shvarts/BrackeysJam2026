@@ -24,4 +24,8 @@ public static class EventManagement
     
     public static Action OnFirstCollectedItem;
     public static Action OnLastCollectedItem;
+    
+    //Player died
+    public static Action OnPlayerDied;
+
 }
