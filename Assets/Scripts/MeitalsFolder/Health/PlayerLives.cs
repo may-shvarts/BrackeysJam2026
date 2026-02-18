@@ -20,7 +20,6 @@ public class PlayerLives : MonoBehaviour
     {
         _currentLives = maxLives;
         _rb = GetComponent<Rigidbody2D>();
-        // Save the starting position of the player
         _startPosition = transform.position;
     }
 
@@ -46,7 +45,6 @@ public class PlayerLives : MonoBehaviour
     {
         if (_invulnerableTimer > 0f)
             return false;
-
         return ((1 << obj.layer) & obstacleLayer) != 0;
     }
 
@@ -55,11 +53,14 @@ public class PlayerLives : MonoBehaviour
         _currentLives--;
         _invulnerableTimer = invulnerableTime;
 
+        // Always respawn after a hit
+        Respawn();
+
+        // If no lives left, fire the "player died" event and reset lives
         if (_currentLives <= 0)
         {
-            // Reset lives when reaching zero 
+            EventManagement.OnPlayerDied?.Invoke();
             _currentLives = maxLives;
-            Respawn();
         }
     }
 
