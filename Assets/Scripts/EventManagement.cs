@@ -1,11 +1,20 @@
 using System;
-using UnityEngine;
 
-public abstract class EventManagement
+public static class EventManagement
 {
-    //Triggering the elevator door movement
-    public static Action OnElevatorEnter;
+    // The floor the elevator is currently resting on (or just arrived at).
+    // Doors read this to know whether an event is relevant to them.
+    public static int CurrentFloor { get; set; } = 0;
     
-    //Triggering the change between floors
-    public static Action OnFloorChange;
+    // Player walked into the elevator cabin. Fires with the floor it's resting on.
+    public static Action<int> OnElevatorEnter;
+
+    // Player walked out of the elevator cabin. Fires with the floor it's resting on.
+    public static Action<int> OnElevatorExit;
+
+    // Doors on the DEPARTURE floor should close. int = departure floor.
+    public static Action<int> OnElevatorPrepareToMove;
+
+    // Doors on the ARRIVAL floor should open. int = arrival floor.
+    public static Action<int> OnElevatorArrived;
 }
