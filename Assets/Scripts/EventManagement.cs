@@ -27,5 +27,7 @@ public static class EventManagement
     
     //Player died
     public static Action OnPlayerDied;
+    
+    public static Action OnWin;
 
 }

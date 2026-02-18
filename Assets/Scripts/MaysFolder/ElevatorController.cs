@@ -14,7 +14,7 @@ public class ElevatorController : MonoBehaviour
     [Tooltip("The Lowest Floor")]
     [SerializeField] private int minFloor = 0;
     [Tooltip("The Highest Floor")]
-    [SerializeField] private int maxFloor = 3;
+    [SerializeField] private int maxFloor = 4;
     [Tooltip("Starting Floor")]
     [SerializeField] private int currentFloor = 0;
 
@@ -62,6 +62,7 @@ public class ElevatorController : MonoBehaviour
 
     private void UpdateFirstDoorEnter()
     {
+        Debug.Log("changed the flag");
         _canEnterFirstDoor = true;
     }
     private void UpdateLastDoorEnter()
@@ -82,10 +83,19 @@ public class ElevatorController : MonoBehaviour
         if (_requiresKeyRelease) return;
 
         //Choosing to go Up or Down in the elevator
-        if (inputValue > 0.5f && currentFloor < maxFloor)
+        if (inputValue > 0.5f)
         {
             _requiresKeyRelease = true;
-            StartCoroutine(MoveElevatorSequence(1));
+            // If on max floor (4) and can enter last door, trigger Game Over instead of moving
+            if (currentFloor == maxFloor && _canEnterLastDoor)
+            {
+                EventManagement.OnWin?.Invoke();
+                return; // Stop here, no elevator movement
+            }
+            else if (currentFloor < maxFloor)
+            {
+                StartCoroutine(MoveElevatorSequence(1));
+            }
         }
         else if (inputValue < -0.5f && currentFloor > minFloor)
         {
@@ -150,6 +160,13 @@ public class ElevatorController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag(playerTag) || _isMoving) return;
+        
+        Debug.Log(_canEnterFirstDoor);
+        //Block door opening / entry on Floor 0 if item not collected
+        if (currentFloor == 0 && !_canEnterFirstDoor) return;
+
+        //Block door opening / entry on Max Floor if last item not collected
+        if (currentFloor == maxFloor && !_canEnterLastDoor) return;
         
         _isPlayerInside  = true;
         _playerTransform = other.transform;
