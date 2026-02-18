@@ -44,6 +44,7 @@ public class ElevatorController : MonoBehaviour
     void Start()
     {
         EventManagement.CurrentFloor = currentFloor;
+        EventManagement.MaxFloor = maxFloor;
     }
     //Signing to Keys events
     void OnEnable()

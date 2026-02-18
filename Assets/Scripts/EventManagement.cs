@@ -5,6 +5,7 @@ public static class EventManagement
     // The floor the elevator is currently resting on (or just arrived at).
     // Doors read this to know whether an event is relevant to them.
     public static int CurrentFloor { get; set; } = 0;
+    public static int MaxFloor { get; set; } = 0;
     
     // Player walked into the elevator cabin. Fires with the floor it's resting on.
     public static Action<int> OnElevatorEnter;
