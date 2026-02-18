@@ -18,6 +18,10 @@ public static class EventManagement
     // Doors on the ARRIVAL floor should open. int = arrival floor.
     public static Action<int> OnElevatorArrived;
     
+    //Freezing and unfreezing player's movement while up the elevator
     public static Action OnPlayerFreeze;
     public static Action OnPlayerUnfreeze;
+    
+    public static Action OnFirstCollectedItem;
+    public static Action OnLastCollectedItem;
 }
