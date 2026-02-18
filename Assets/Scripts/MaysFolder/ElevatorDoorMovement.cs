@@ -19,25 +19,23 @@ public class ElevatorDoorMovement : MonoBehaviour
 
     [Header("Sorting Layer")]
     [SerializeField] private SpriteRenderer doorRenderer;
-    [SerializeField] private string defaultSortingLayer = "Default";
-    [SerializeField] private int    defaultSortingOrder = 0;
-    [SerializeField] private string frontSortingLayer   = "Foreground";
-    [SerializeField] private int    frontSortingOrder   = 10;
+    [SerializeField] private int defaultSortingOrder = 3;
+    [SerializeField] private int frontSortingOrder = 5;
     
     void OnEnable()
     {
-        EventManagement.OnElevatorEnter         += OnElevatorEnter;
-        EventManagement.OnElevatorExit          += OnElevatorExit;
+        EventManagement.OnElevatorEnter += OnElevatorEnter;
+        EventManagement.OnElevatorExit += OnElevatorExit;
         EventManagement.OnElevatorPrepareToMove += OnPrepareToMove;
-        EventManagement.OnElevatorArrived       += OnArrived;
+        EventManagement.OnElevatorArrived += OnArrived;
     }
 
     void OnDisable()
     {
-        EventManagement.OnElevatorEnter         -= OnElevatorEnter;
-        EventManagement.OnElevatorExit          -= OnElevatorExit;
+        EventManagement.OnElevatorEnter -= OnElevatorEnter;
+        EventManagement.OnElevatorExit -= OnElevatorExit;
         EventManagement.OnElevatorPrepareToMove -= OnPrepareToMove;
-        EventManagement.OnElevatorArrived       -= OnArrived;
+        EventManagement.OnElevatorArrived -= OnArrived;
     }
 
     private void OnElevatorEnter(int floor)
@@ -55,14 +53,14 @@ public class ElevatorDoorMovement : MonoBehaviour
     private void OnPrepareToMove(int departureFloor)
     {
         if (departureFloor != myFloor) return;
-        SetSorting(frontSortingLayer, frontSortingOrder);
+        SetSorting(frontSortingOrder);
         Close();
     }
 
     private void OnArrived(int arrivalFloor)
     {
         if (arrivalFloor != myFloor) return;
-        SetSorting(defaultSortingLayer, defaultSortingOrder);
+        SetSorting(defaultSortingOrder);
         Open();
     }
 
@@ -80,12 +78,11 @@ public class ElevatorDoorMovement : MonoBehaviour
         transform.DOMoveX(closedXPos, closeDuration).SetEase(Ease.OutCubic);
     }
 
-    private void SetSorting(string layerName, int order)
+    private void SetSorting(int order)
     {
         if (doorRenderer != null)
         {
-            doorRenderer.sortingLayerName = layerName;
-            doorRenderer.sortingOrder     = order;
+            doorRenderer.sortingOrder = order;
         }
     }
 }

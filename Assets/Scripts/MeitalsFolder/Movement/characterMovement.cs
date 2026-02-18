@@ -22,25 +22,56 @@ public class characterMovement : MonoBehaviour
 
     private float _jumpBufferCounter;
     private bool _isGrounded;
-
+    private bool _canMove = true;
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
+    void OnEnable()
+    {
+        EventManagement.OnPlayerFreeze   += FreezePlayer;
+        EventManagement.OnPlayerUnfreeze += UnfreezePlayer;
+    }
+
+    void OnDisable()
+    {
+        EventManagement.OnPlayerFreeze   -= FreezePlayer;
+        EventManagement.OnPlayerUnfreeze -= UnfreezePlayer;
+    }
+
+    private void FreezePlayer()
+    {
+        _canMove = false;
+        moveInput = Vector2.zero;
+        _jumpBufferCounter = 0f;
+        rb.linearVelocity = Vector2.zero;
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    private void UnfreezePlayer()
+    {
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _canMove = true;
+    }
+
     private void OnMove(InputValue value)
     {
+        if (!_canMove) return;
         moveInput = value.Get<Vector2>();
     }
 
     private void OnJump(InputValue value)
     {
+        if (!_canMove) return;
         if (value.isPressed)
             _jumpBufferCounter = jumpBufferTime;
     }
 
     private void FixedUpdate()
     {
+        if (!_canMove) return;
+
         rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
 
         if (_jumpBufferCounter > 0f && _isGrounded)

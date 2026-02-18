@@ -74,7 +74,8 @@ public class ElevatorController : MonoBehaviour
     private IEnumerator MoveElevatorSequence(int directionMultiplier)
     {
         _isMoving = true;
-
+        EventManagement.OnPlayerFreeze?.Invoke();
+        
         Transform playerSnapshot = _playerTransform;
 
         int departureFloor = currentFloor;
@@ -104,7 +105,6 @@ public class ElevatorController : MonoBehaviour
             if (floorDropOffPoints != null && currentFloor >= 0 && currentFloor < floorDropOffPoints.Length)
             {
                 dropoffPosition = floorDropOffPoints[currentFloor].position;
-                Debug.Log($"[Elevator] Drop-off point world position: {dropoffPosition}");
             }
             
             Rigidbody2D playerRb = playerSnapshot.GetComponentInParent<Rigidbody2D>();
@@ -116,6 +116,7 @@ public class ElevatorController : MonoBehaviour
         }
 
         EventManagement.OnElevatorArrived?.Invoke(currentFloor);
+        EventManagement.OnPlayerUnfreeze?.Invoke(); // ← unfreeze after arrival
 
         _isMoving = false;
     }
