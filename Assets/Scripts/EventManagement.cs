@@ -34,4 +34,10 @@ public static class EventManagement
     public static Action<int> OnLivesChanged;
 
     public static Action RestartGame;
+    
+    //Gas wheel interaction
+    public static Action OnGasWheelEnter;
+    public static Action OnGasWheelExit;
+    public static Action OnGasWheelActivated;
+
 }
