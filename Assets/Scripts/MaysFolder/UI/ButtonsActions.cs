@@ -7,11 +7,6 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     [SerializeField] private GameObject pauseMenuUI;
     private bool _ableToPause = false;
 
-    private void OnDisable()
-    {
-        throw new NotImplementedException();
-    }
-
     private void Awake()
     {
         _ableToPause = false;
@@ -52,6 +47,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     {
         DisablePauseMenu();
         DisableMainMenu();
+        
         EventManagement.RestartGame?.Invoke();
         _ableToPause = true;
         Time.timeScale = 1f;
@@ -87,6 +83,14 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         Time.timeScale = 0f;
         DisablePauseMenu();
         EnableMainMenu();
+        _ableToPause = false;
+    }
+    
+    public void FreezeGameForEndScreen()
+    {
+        Time.timeScale = 0f;
+        DisablePauseMenu();
+        DisableMainMenu();
         _ableToPause = false;
     }
     
