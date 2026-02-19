@@ -29,6 +29,7 @@ public class ElevatorDoorMovement : MonoBehaviour
         EventManagement.OnElevatorExit += OnElevatorExit;
         EventManagement.OnElevatorPrepareToMove += OnPrepareToMove;
         EventManagement.OnElevatorArrived += OnArrived;
+        EventManagement.RestartGame += ResetDoor;
     }
 
     void OnDisable()
@@ -37,6 +38,7 @@ public class ElevatorDoorMovement : MonoBehaviour
         EventManagement.OnElevatorExit -= OnElevatorExit;
         EventManagement.OnElevatorPrepareToMove -= OnPrepareToMove;
         EventManagement.OnElevatorArrived -= OnArrived;
+        EventManagement.RestartGame -= ResetDoor;
     }
 
     private void OnElevatorEnter(int floor)
@@ -92,5 +94,17 @@ public class ElevatorDoorMovement : MonoBehaviour
         {
             doorRenderer.sortingOrder = order;
         }
+    }
+    
+    private void ResetDoor()
+    {
+        StopAllCoroutines();
+        transform.DOKill();
+        
+        Vector3 currentPos = transform.position;
+        currentPos.x = closedXPos;
+        transform.position = currentPos;
+        
+        SetSorting(defaultSortingOrder);
     }
 }

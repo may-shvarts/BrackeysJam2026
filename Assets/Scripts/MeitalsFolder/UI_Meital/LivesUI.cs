@@ -9,13 +9,19 @@ public class LivesUI : MonoBehaviour
     private void OnEnable()
     {
         EventManagement.OnLivesChanged += UpdateHearts;
+        EventManagement.RestartGame += ResetLives;
     }
 
     private void OnDisable()
     {
         EventManagement.OnLivesChanged -= UpdateHearts;
+        EventManagement.RestartGame -= ResetLives;
     }
 
+    private void ResetLives()
+    {
+        UpdateHearts(PlayerLives.MaxLives);
+    }
     private void UpdateHearts(int currentLives)
     {
         for (int i = 0; i < hearts.Length; i++)

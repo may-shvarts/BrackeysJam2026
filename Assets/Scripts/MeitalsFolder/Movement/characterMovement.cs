@@ -32,12 +32,14 @@ public class characterMovement : MonoBehaviour
     {
         EventManagement.OnPlayerFreeze   += FreezePlayer;
         EventManagement.OnPlayerUnfreeze += UnfreezePlayer;
+        EventManagement.RestartGame += UnfreezePlayer;
     }
 
     void OnDisable()
     {
         EventManagement.OnPlayerFreeze   -= FreezePlayer;
         EventManagement.OnPlayerUnfreeze -= UnfreezePlayer;
+        EventManagement.RestartGame -= UnfreezePlayer;
     }
 
     private void FreezePlayer()

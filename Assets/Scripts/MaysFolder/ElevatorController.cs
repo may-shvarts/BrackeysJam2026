@@ -41,8 +41,17 @@ public class ElevatorController : MonoBehaviour
     private bool _canEnterFirstDoor = false;
     private bool _canEnterLastDoor = false;
     
+    //Initial states saved for game restart
+    private Vector3 _initialPosition;
+    private Vector3 _initialCameraPosition;
+    private int _initialFloor;
+    
     void Start()
     {
+        _initialPosition = transform.position;
+        if (cameraTarget != null) _initialCameraPosition = cameraTarget.position;
+        _initialFloor = currentFloor;
+        
         EventManagement.CurrentFloor = currentFloor;
         EventManagement.MaxFloor = maxFloor;
     }
@@ -51,6 +60,8 @@ public class ElevatorController : MonoBehaviour
     {
         EventManagement.OnFirstCollectedItem += UpdateFirstDoorEnter;
         EventManagement.OnLastCollectedItem += UpdateLastDoorEnter;
+        
+        EventManagement.RestartGame += ResetElevator;
         verticalInput.Enable();
     }
 
@@ -58,9 +69,31 @@ public class ElevatorController : MonoBehaviour
     {
         EventManagement.OnFirstCollectedItem -= UpdateFirstDoorEnter;
         EventManagement.OnLastCollectedItem -= UpdateLastDoorEnter;
+        
+        EventManagement.RestartGame -= ResetElevator;
         verticalInput.Disable();
     }
 
+    private void ResetElevator()
+    {
+        StopAllCoroutines();
+        transform.DOKill();
+        if (cameraTarget != null) cameraTarget.DOKill();
+
+        transform.position = _initialPosition;
+        if (cameraTarget != null) cameraTarget.position = _initialCameraPosition;
+        
+        currentFloor = _initialFloor;
+        EventManagement.CurrentFloor = currentFloor;
+
+        _isPlayerInside = false;
+        _isMoving = false;
+        _requiresKeyRelease = false;
+        _canEnterFirstDoor = false;
+        _canEnterLastDoor = false;
+        _playerTransform = null;
+    }
+    
     private void UpdateFirstDoorEnter()
     {
         Debug.Log("changed the flag");

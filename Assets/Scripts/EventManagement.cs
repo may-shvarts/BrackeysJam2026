@@ -32,5 +32,6 @@ public static class EventManagement
     public static Action OnWin;
     
     public static Action<int> OnLivesChanged;
-    
+
+    public static Action RestartGame;
 }

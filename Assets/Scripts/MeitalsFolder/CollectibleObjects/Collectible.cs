@@ -2,6 +2,14 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
+    private void Awake()
+    {
+        EventManagement.RestartGame += ResetCollectible;
+    }
+    private void OnDestroy()
+    {
+        EventManagement.RestartGame -= ResetCollectible;
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         PlayerCollectibles player = other.GetComponent<PlayerCollectibles>();
@@ -9,7 +17,11 @@ public class Collectible : MonoBehaviour
         if (player != null)
         {
             player.Collect();
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
+    }
+    private void ResetCollectible()
+    {
+        gameObject.SetActive(true);
     }
 }

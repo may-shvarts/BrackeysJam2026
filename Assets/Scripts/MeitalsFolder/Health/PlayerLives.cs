@@ -1,10 +1,11 @@
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerLives : MonoBehaviour
 {
     [Header("Lives")]
-    [SerializeField] private int maxLives = 3;
+    [SerializeField] public static int MaxLives { get; set; } = 3;
     [SerializeField] private float invulnerableTime = 0.8f;
 
     [Header("Damage Layer")]
@@ -15,12 +16,21 @@ public class PlayerLives : MonoBehaviour
 
     private Vector3 _startPosition;
     private Rigidbody2D _rb;
-
     private void Awake()
     {
-        _currentLives = maxLives;
+        _currentLives = MaxLives;
         _rb = GetComponent<Rigidbody2D>();
         _startPosition = transform.position;
+    }
+
+    private void OnEnable()
+    {
+        EventManagement.RestartGame += Restart;
+    }
+
+    private void OnDisable()
+    {
+        EventManagement.RestartGame -= Restart;
     }
 
     private void Update()
@@ -61,11 +71,16 @@ public class PlayerLives : MonoBehaviour
         if (_currentLives <= 0)
         {
             EventManagement.OnPlayerDied?.Invoke();
-            _currentLives = maxLives;
+            _currentLives = MaxLives;
             EventManagement.OnLivesChanged?.Invoke(_currentLives);
         }
     }
 
+    private void Restart()
+    {
+        _currentLives = MaxLives;
+        Respawn();
+    }
     private void Respawn()
     {
         transform.position = _startPosition;

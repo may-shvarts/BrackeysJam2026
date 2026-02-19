@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerCollectibles : MonoBehaviour
@@ -5,6 +6,16 @@ public class PlayerCollectibles : MonoBehaviour
     private const int TOTAL_COLLECTIBLES = 5;
 
     private int collectedCount = 0;
+
+    private void OnEnable()
+    {
+        EventManagement.RestartGame += ResetCollectibles;
+    }
+
+    private void OnDisable()
+    {
+        EventManagement.RestartGame -= ResetCollectibles;
+    }
 
     public void Collect()
     {
@@ -28,5 +39,10 @@ public class PlayerCollectibles : MonoBehaviour
     public int GetCollectedCount()
     {
         return collectedCount;
+    }
+
+    private void ResetCollectibles()
+    {
+        collectedCount = 0;
     }
 }

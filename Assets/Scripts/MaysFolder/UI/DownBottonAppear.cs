@@ -29,6 +29,7 @@ public class DownBottonAppear : MonoBehaviour
         EventManagement.OnElevatorArrived += HandleElevatorArrived;
         EventManagement.OnFirstCollectedItem += HandleFirstCollectedItem;
         EventManagement.OnLastCollectedItem += HandleLastCollectedItem;
+        EventManagement.RestartGame += HandleRestart;
     }
 
     private void OnDisable()
@@ -39,6 +40,7 @@ public class DownBottonAppear : MonoBehaviour
         EventManagement.OnElevatorArrived -= HandleElevatorArrived;
         EventManagement.OnFirstCollectedItem -= HandleFirstCollectedItem;
         EventManagement.OnLastCollectedItem -= HandleLastCollectedItem;
+        EventManagement.RestartGame -= HandleRestart;
     }
     private void HandleFirstCollectedItem()
     {
@@ -120,5 +122,17 @@ public class DownBottonAppear : MonoBehaviour
         {
             _uiImage.enabled = true;
         }
+    }
+    
+    private void HandleRestart()
+    {
+        _playerOnElevator = false;
+        _elevatorMoving = false;
+        _collectedFirstItem = false;
+        _collectedLastItem = false;
+        
+        _currentFloor = 0; 
+
+        UpdateVisibility();
     }
 }
