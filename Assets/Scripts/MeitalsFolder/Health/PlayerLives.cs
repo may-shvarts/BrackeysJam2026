@@ -79,11 +79,22 @@ public class PlayerLives : MonoBehaviour
     private void Restart()
     {
         _currentLives = MaxLives;
-        Respawn();
+        // Always go back to the very beginning on game restart
+        transform.position = _startPosition;
+        _rb.linearVelocity = Vector2.zero;
     }
+    
     private void Respawn()
     {
-        transform.position = _startPosition;
+        // Check which floor we are currently on
+        if (EventManagement.CurrentFloor == 0)
+        {
+            transform.position = _startPosition;
+        }
+        else
+        {
+            transform.position = EventManagement.CurrentFloorSpawnPoint;
+        }
         _rb.linearVelocity = Vector2.zero;
     }
 }

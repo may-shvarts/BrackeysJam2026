@@ -18,6 +18,43 @@ public class WheelGasSwitch : MonoBehaviour
     private bool used = false;
     private Coroutine fadeRoutine;
 
+    private float _initialEmissionRate;
+    private void Start()
+    {
+        if (gasVfx != null)
+        {
+            _initialEmissionRate = gasVfx.emission.rateOverTimeMultiplier;
+        }
+    }
+
+    private void OnEnable()
+    {
+        EventManagement.RestartGame += ResetGas;
+    }
+
+    private void OnDisable()
+    {
+        EventManagement.RestartGame -= ResetGas;
+    }
+    private void ResetGas()
+    {
+        used = false;
+        if (fadeRoutine != null)
+        {
+            StopCoroutine(fadeRoutine);
+            fadeRoutine = null;
+        }
+        if (gasTrigger != null)
+        {
+            gasTrigger.enabled = true;
+        }
+        if (gasVfx != null)
+        {
+            var emission = gasVfx.emission;
+            emission.rateOverTimeMultiplier = _initialEmissionRate;
+            gasVfx.Play(true);
+        }
+    }
     public void Interact()
     {
         if (used) return;

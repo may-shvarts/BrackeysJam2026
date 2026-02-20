@@ -1,7 +1,10 @@
 using System;
+using UnityEngine;
 
 public static class EventManagement
 {
+    // The spawn point for the current floor (updated by the elevator)
+    public static Vector3 CurrentFloorSpawnPoint { get; set; }
     // The floor the elevator is currently resting on (or just arrived at).
     // Doors read this to know whether an event is relevant to them.
     public static int CurrentFloor { get; set; } = 0;

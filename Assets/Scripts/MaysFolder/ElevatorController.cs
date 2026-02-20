@@ -173,7 +173,8 @@ public class ElevatorController : MonoBehaviour
             {
                 dropoffPosition = floorDropOffPoints[currentFloor].position;
             }
-            
+            // Update the global spawn point so the player respawns here if they die
+            EventManagement.CurrentFloorSpawnPoint = dropoffPosition;
             Rigidbody2D playerRb = playerSnapshot.GetComponentInParent<Rigidbody2D>();
             if (playerRb != null)
             {

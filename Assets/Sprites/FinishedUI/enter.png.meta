@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2825f1d84d9986d4ca463128e09b7670
+guid: 871eb0a62cbbad440afa3620a93010da
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7257432411372217726
-    second: Obstacle 3_0
+      213: 8076251239260334110
+    second: enter_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -152,23 +152,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Obstacle 3_0
+      name: enter_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 445
-        height: 418
+        x: 47
+        y: 104
+        width: 430
+        height: 308
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e756f3d935497b460800000000000000
-      internalID: 7257432411372217726
+      spriteID: e18abe856bb941070800000000000000
+      internalID: 8076251239260334110
       vertices: []
       indices: 
       edges: []
@@ -177,7 +177,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 6cb4656b0a394cc458cf7c73d2715230
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -187,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Obstacle 3_0: 7257432411372217726
+      enter_0: 8076251239260334110
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

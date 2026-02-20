@@ -11,6 +11,24 @@ public class PlayerGasWheelInteraction : MonoBehaviour
 {
     private WheelGasSwitch currentWheel;
 
+    private void OnEnable()
+    {
+        EventManagement.RestartGame += ResetInteraction;
+    }
+
+    private void OnDisable()
+    {
+        EventManagement.RestartGame -= ResetInteraction;
+    }
+    
+    private void ResetInteraction()
+    {
+        if (currentWheel != null)
+        {
+            currentWheel = null;
+            EventManagement.OnGasWheelExit?.Invoke(); 
+        }
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         var wheel = other.GetComponent<WheelGasSwitch>();

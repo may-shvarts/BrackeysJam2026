@@ -10,6 +10,8 @@ public class characterMovement : MonoBehaviour
 
     [Header("Ground Rule")]
     [SerializeField] private LayerMask groundLayers;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private float groundCheckRadius = 0.2f;
 
     [Range(0f, 1f)]
     [SerializeField] private float minGroundNormalY = 0.6f;
@@ -17,15 +19,15 @@ public class characterMovement : MonoBehaviour
     [Header("Jump Feel")]
     [SerializeField] private float jumpBufferTime = 0.12f;
 
-    private Rigidbody2D rb;
-    private Vector2 moveInput;
+    private Rigidbody2D _rb;
+    private Vector2 _moveInput;
 
     private float _jumpBufferCounter;
     private bool _isGrounded;
     private bool _canMove = true;
     private void Awake()
     {
-        rb = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody2D>();
     }
 
     void OnEnable()
@@ -45,22 +47,22 @@ public class characterMovement : MonoBehaviour
     private void FreezePlayer()
     {
         _canMove = false;
-        moveInput = Vector2.zero;
+        _moveInput = Vector2.zero;
         _jumpBufferCounter = 0f;
-        rb.linearVelocity = Vector2.zero;
-        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        _rb.linearVelocity = Vector2.zero;
+        _rb.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
     private void UnfreezePlayer()
     {
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        _rb.constraints = RigidbodyConstraints2D.FreezeRotation;
         _canMove = true;
     }
 
     private void OnMove(InputValue value)
     {
         if (!_canMove) return;
-        moveInput = value.Get<Vector2>();
+        _moveInput = value.Get<Vector2>();
     }
 
     private void OnJump(InputValue value)
@@ -69,7 +71,7 @@ public class characterMovement : MonoBehaviour
         if (value.isPressed)
             _jumpBufferCounter = jumpBufferTime;
     }
-
+/*
     private void FixedUpdate()
     {
         if (!_canMove) return;
@@ -84,8 +86,26 @@ public class characterMovement : MonoBehaviour
 
         if (_jumpBufferCounter > 0f)
             _jumpBufferCounter -= Time.fixedDeltaTime;
-    }
+    }*/
+    private void FixedUpdate()
+    {
+        if (!_canMove) return;
 
+        // בדיקת קרקע אמינה בעזרת פיזיקה
+        _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayers);
+
+        _rb.linearVelocity = new Vector2(_moveInput.x * moveSpeed, _rb.linearVelocity.y);
+
+        if (_jumpBufferCounter > 0f && _isGrounded)
+        {
+            _rb.linearVelocity = new Vector2(_rb.linearVelocity.x, jumpVelocity);
+            _jumpBufferCounter = 0f;
+        }
+
+        if (_jumpBufferCounter > 0f)
+            _jumpBufferCounter -= Time.fixedDeltaTime;
+    }
+    /*
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (((1 << collision.gameObject.layer) & groundLayers) == 0)
@@ -108,5 +128,5 @@ public class characterMovement : MonoBehaviour
             return;
 
         _isGrounded = false;
-    }
+    }*/
 }
