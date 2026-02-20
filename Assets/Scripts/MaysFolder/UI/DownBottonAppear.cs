@@ -9,7 +9,7 @@ public class DownBottonAppear : MonoBehaviour
     private bool _collectedFirstItem = false;
     private bool _collectedLastItem = false;
     private int _currentFloor = 0;
-    private int _maxFloor = 5;
+    private int _maxFloor = 4;
 
     private String DOWN_BOTTON_TAG = "DownBotton"; 
     private String UP_BOTTON_TAG = "UpBotton"; 
@@ -81,74 +81,59 @@ public class DownBottonAppear : MonoBehaviour
     }
     private void UpdateVisibility()
     {
-        if (_playerOnElevator && !_elevatorMoving)
+        // 1. אם השחקן לא במעלית או שהמעלית זזה - מסתירים את הכפתורים מיד
+        if (!_playerOnElevator || _elevatorMoving)
         {
-            if (this.gameObject.CompareTag(DOWN_BOTTON_TAG) && _currentFloor > 0)
+            HideObject();
+            return; // ה-return עוצר את המשך הפונקציה כדי לחסוך בדיקות מיותרות
+        }
+
+        // --- 2. לוגיקה עבור כפתור ירידה (למטה) ---
+        if (this.gameObject.CompareTag(DOWN_BOTTON_TAG))
+        {
+            if (_currentFloor > 0)
             {
                 ShowObject();
             }
-            else if (this.gameObject.CompareTag(UP_BOTTON_TAG))
+            else
             {
-                // קומות ביניים (1 עד maxFloor - 1) - מראה כפתור עלייה תמיד
-                if (_currentFloor > 0 && _currentFloor < _maxFloor)
-                {
-                    ShowObject();
-                }
-                // קומת הקרקע (0) - מראה כפתור רק אם נאסף החפץ הראשון
-                else if (_currentFloor == 0 && _collectedFirstItem)
-                {
-                    ShowObject();
-                }
-                // קומת המקסימום המקורית (maxFloor) - מראה כפתור עלייה רק אם נאסף החפץ האחרון!
-                else if (_currentFloor == _maxFloor && _collectedLastItem)
-                {
-                    ShowObject();
-                }
-                // אם אנחנו בקומה העליונה החדשה (maxFloor + 1), או שהתנאים למעלה לא התקיימו
-                else
-                {
-                    HideObject();
-                }
+                HideObject(); // בקומה 0 (קרקע) אי אפשר לרדת
             }
-            // מונע מהכפתור להישאר דלוק אם התגים לא מתאימים או במצב אחר
-            else if (!this.gameObject.CompareTag(DOWN_BOTTON_TAG)) 
+            return; 
+        }
+
+        // --- 3. לוגיקה עבור כפתור עלייה (למעלה) ---
+        if (this.gameObject.CompareTag(UP_BOTTON_TAG))
+        {
+            // קומה 5 (קומת הבונוס/הסיום) - לעולם לא מראים חץ למעלה
+            if (_currentFloor == 5)
+            {
+                HideObject();
+            }
+            // קומה 4 (_maxFloor) - מראים רק אם נאסף החפץ האחרון כדי לאפשר עלייה ל-5
+            else if (_currentFloor == _maxFloor) 
+            {
+                if (_collectedLastItem) ShowObject();
+                else HideObject();
+            }
+            // קומת הקרקע (0) - מראים רק אם נאסף החפץ הראשון
+            else if (_currentFloor == 0)
+            {
+                if (_collectedFirstItem) ShowObject();
+                else HideObject();
+            }
+            // קומות ביניים (1, 2, 3) - מראים חץ למעלה תמיד
+            else if (_currentFloor > 0 && _currentFloor < _maxFloor)
+            {
+                ShowObject();
+            }
+            // מנגנון ביטחון לכל קומה לא צפויה אחרת
+            else
             {
                 HideObject();
             }
         }
-        else
-        {
-            HideObject();
-        }
     }
-/*
-    private void UpdateVisibility()
-    {
-        if (_playerOnElevator && !_elevatorMoving)
-        {
-            if (this.gameObject.CompareTag(DOWN_BOTTON_TAG) && _currentFloor > 0)
-            {
-                ShowObject();
-            }
-
-            else if (this.gameObject.CompareTag(UP_BOTTON_TAG) && _currentFloor <= _maxFloor)
-            {
-                if(_currentFloor != 0 && _currentFloor != _maxFloor)
-                    ShowObject();
-                else if(_currentFloor == _maxFloor && _collectedLastItem)
-                    ShowObject();
-                else if(_currentFloor == 0 && _collectedFirstItem)
-                    ShowObject();
-                else
-                    HideObject();
-            }
-        }
-        else
-        {
-            HideObject();
-        }
-    }
-*/
     private void HideObject()
     {
         if (_uiImage != null && _uiImage.enabled)
