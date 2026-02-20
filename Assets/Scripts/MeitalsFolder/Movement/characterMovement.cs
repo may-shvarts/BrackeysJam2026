@@ -13,9 +13,6 @@ public class characterMovement : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius = 0.2f;
 
-    [Range(0f, 1f)]
-    [SerializeField] private float minGroundNormalY = 0.6f;
-
     [Header("Jump Feel")]
     [SerializeField] private float jumpBufferTime = 0.12f;
 
@@ -71,27 +68,9 @@ public class characterMovement : MonoBehaviour
         if (value.isPressed)
             _jumpBufferCounter = jumpBufferTime;
     }
-/*
     private void FixedUpdate()
     {
         if (!_canMove) return;
-
-        rb.linearVelocity = new Vector2(moveInput.x * moveSpeed, rb.linearVelocity.y);
-
-        if (_jumpBufferCounter > 0f && _isGrounded)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpVelocity);
-            _jumpBufferCounter = 0f;
-        }
-
-        if (_jumpBufferCounter > 0f)
-            _jumpBufferCounter -= Time.fixedDeltaTime;
-    }*/
-    private void FixedUpdate()
-    {
-        if (!_canMove) return;
-
-        // בדיקת קרקע אמינה בעזרת פיזיקה
         _isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, groundLayers);
 
         _rb.linearVelocity = new Vector2(_moveInput.x * moveSpeed, _rb.linearVelocity.y);
@@ -105,28 +84,4 @@ public class characterMovement : MonoBehaviour
         if (_jumpBufferCounter > 0f)
             _jumpBufferCounter -= Time.fixedDeltaTime;
     }
-    /*
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (((1 << collision.gameObject.layer) & groundLayers) == 0)
-            return;
-
-        for (int i = 0; i < collision.contactCount; i++)
-        {
-            var contact = collision.GetContact(i);
-            if (contact.normal.y >= minGroundNormalY)
-            {
-                _isGrounded = true;
-                return;
-            }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (((1 << collision.gameObject.layer) & groundLayers) == 0)
-            return;
-
-        _isGrounded = false;
-    }*/
 }

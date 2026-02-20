@@ -6,6 +6,9 @@ public class LivesUI : MonoBehaviour
     [Header("Heart Images (Left to Right)")]
     [SerializeField] private Image[] hearts;
 
+    [Header("Heart Sprites")]
+    [SerializeField] private Sprite fullHeartSprite; 
+    [SerializeField] private Sprite emptyHeartSprite;
     private void OnEnable()
     {
         EventManagement.OnLivesChanged += UpdateHearts;
@@ -26,7 +29,15 @@ public class LivesUI : MonoBehaviour
     {
         for (int i = 0; i < hearts.Length; i++)
         {
-            hearts[i].enabled = i < currentLives;
+            hearts[i].enabled = true; 
+            if (i < currentLives)
+            {
+                hearts[i].sprite = fullHeartSprite;
+            }
+            else
+            {
+                hearts[i].sprite = emptyHeartSprite;
+            }
         }
     }
 }
