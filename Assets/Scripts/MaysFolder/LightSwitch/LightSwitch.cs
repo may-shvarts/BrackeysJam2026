@@ -20,8 +20,9 @@ public class InteractableObject : MonoBehaviour
 
     private void Update()
     {
-        if (isPlayerInRange && Keyboard.current.enterKey.wasPressedThisFrame)
+        if (isPlayerInRange && Keyboard.current.eKey.wasPressedThisFrame)
         {
+            EventManagement.OnLightInteracted?.Invoke();
             ChangeSprite();
             DOVirtual.DelayedCall(2f, () =>
             {
@@ -43,6 +44,7 @@ public class InteractableObject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = true;
+            EventManagement.OnLightHoverEnter?.Invoke();
         }
     }
 
@@ -51,6 +53,7 @@ public class InteractableObject : MonoBehaviour
         if (collision.CompareTag("Player"))
         {
             isPlayerInRange = false;
+            EventManagement.OnLightHoverExit?.Invoke();
         }
     }
 }

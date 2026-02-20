@@ -42,5 +42,9 @@ public static class EventManagement
     public static Action OnGasWheelEnter;
     public static Action OnGasWheelExit;
     public static Action OnGasWheelActivated;
-
+    
+    //Light switch interactions
+    public static Action OnLightHoverEnter;
+    public static Action OnLightHoverExit;
+    public static Action OnLightInteracted;
 }

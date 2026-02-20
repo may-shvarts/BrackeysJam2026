@@ -177,7 +177,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 6861851060128871100, guid: a163ea29f55a7464493a430b9ed343bd, type: 3}
+  m_Sprite: {fileID: -38142256890440793, guid: 60fe062c5db23064184c3e5f58526ce0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11923,7 +11923,7 @@ MonoBehaviour:
   moveDuration: 2
   doorsWaitDuration: 1.5
   minFloor: 0
-  maxFloor: 5
+  maxFloor: 4
   currentFloor: 0
   cameraTarget: {fileID: 1061438232}
   verticalInput:
@@ -15778,6 +15778,7 @@ RectTransform:
   - {fileID: 1630751458}
   - {fileID: 6204664}
   - {fileID: 1952343633}
+  - {fileID: 1228056886}
   - {fileID: 1180353223}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -17393,7 +17394,7 @@ GameObject:
   - component: {fileID: 1180353225}
   - component: {fileID: 1180353224}
   m_Layer: 5
-  m_Name: EnterButton
+  m_Name: EButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17408,7 +17409,7 @@ RectTransform:
   m_GameObject: {fileID: 1180353222}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1008465715}
@@ -17438,7 +17439,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8076251239260334110, guid: 871eb0a62cbbad440afa3620a93010da, type: 3}
+  m_Sprite: {fileID: -5828816846346494190, guid: c13b2472ba654534cb7e2784f282c7d3, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17635,6 +17636,55 @@ Transform:
   - {fileID: 990034169}
   m_Father: {fileID: 1406862188}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1228056885
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1228056886}
+  - component: {fileID: 1228056887}
+  m_Layer: 5
+  m_Name: EmptyActivationCandles
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1228056886
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228056885}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1008465715}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1228056887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228056885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fe79f98f7434a6385f4f496df913822, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enterKeyPrompt: {fileID: 1180353222}
 --- !u!1 &1234577964
 GameObject:
   m_ObjectHideFlags: 0
@@ -18833,6 +18883,7 @@ GameObject:
   - component: {fileID: 1323284247}
   - component: {fileID: 1323284249}
   - component: {fileID: 1323284248}
+  - component: {fileID: 1323284250}
   m_Layer: 0
   m_Name: Candle Stance 2 Off_0 (1)
   m_TagString: Untagged
@@ -18956,6 +19007,19 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1323284250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1323284246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dedc832543c79b419709b474badce69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite: {fileID: 6913835871335585909, guid: ffe23b906eacc4c4b999e38a968430ec, type: 3}
 --- !u!1 &1323757961
 GameObject:
   m_ObjectHideFlags: 0
@@ -21919,7 +21983,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1186884057437995204, guid: 5f1608eba267dd245b2a8e8f52830113, type: 3}
+  m_Sprite: {fileID: -1848082581626041507, guid: ecb45bf8822288c41a5a1c83c43dd6ca, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -23823,6 +23887,7 @@ GameObject:
   - component: {fileID: 1823109317}
   - component: {fileID: 1823109318}
   - component: {fileID: 1823109319}
+  - component: {fileID: 1823109320}
   m_Layer: 0
   m_Name: Candle Stance 2 Off_0
   m_TagString: Untagged
@@ -23946,6 +24011,19 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 4.258917, y: 3.464889}
   m_EdgeRadius: 0
+--- !u!114 &1823109320
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823109316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dedc832543c79b419709b474badce69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSprite: {fileID: -4280275847341085377, guid: dbe15cf368df69f40ba46a6cc0b7d938, type: 3}
 --- !u!1 &1827923645
 GameObject:
   m_ObjectHideFlags: 0
