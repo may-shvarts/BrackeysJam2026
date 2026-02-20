@@ -6,6 +6,9 @@ public class GasWheelUIController : MonoBehaviour
     [Tooltip("גררי לכאן את האובייקט של תמונת ה-Enter מה-Hierarchy")]
     [SerializeField] private GameObject enterKeyPrompt;
 
+    // משתנה ששומר האם הגלגל כבר סובב
+    private bool isWheelActivated = false;
+
     private void Awake()
     {
         // נוודא שהתמונה מוסתרת כשהמשחק מתחיל
@@ -18,11 +21,11 @@ public class GasWheelUIController : MonoBehaviour
         EventManagement.OnGasWheelEnter += ShowPrompt;
         EventManagement.OnGasWheelExit += HidePrompt;
         
-        // כשהגלגל מופעל, אנחנו רוצים להעלים את התמונה
-        EventManagement.OnGasWheelActivated += HidePrompt;
+        // הפנייה לפונקציה החדשה שמטפלת בהפעלת הגלגל
+        EventManagement.OnGasWheelActivated += HandleWheelActivated;
         
-        // גם בריסטרט כדאי לוודא שהתמונה נעלמת
-        EventManagement.RestartGame += HidePrompt;
+        // הפנייה לפונקציה החדשה שמטפלת בריסטרט
+        EventManagement.RestartGame += ResetController;
     }
 
     private void OnDisable()
@@ -30,12 +33,15 @@ public class GasWheelUIController : MonoBehaviour
         // ביטול הרשמה
         EventManagement.OnGasWheelEnter -= ShowPrompt;
         EventManagement.OnGasWheelExit -= HidePrompt;
-        EventManagement.OnGasWheelActivated -= HidePrompt;
-        EventManagement.RestartGame -= HidePrompt;
+        EventManagement.OnGasWheelActivated -= HandleWheelActivated;
+        EventManagement.RestartGame -= ResetController;
     }
 
     private void ShowPrompt()
     {
+        // אם הגלגל כבר הופעל, אנחנו פשוט יוצאים מהפונקציה ולא מציגים את ה-UI
+        if (isWheelActivated) return;
+
         if (enterKeyPrompt != null)
         {
             enterKeyPrompt.SetActive(true);
@@ -48,5 +54,17 @@ public class GasWheelUIController : MonoBehaviour
         {
             enterKeyPrompt.SetActive(false);
         }
+    }
+
+    private void HandleWheelActivated()
+    {
+        isWheelActivated = true; // מסמנים שהגלגל הופעל
+        HidePrompt(); // מעלימים את התמונה מיד
+    }
+
+    private void ResetController()
+    {
+        isWheelActivated = false; // מאפסים את המצב לקראת המשחק החדש
+        HidePrompt(); // מוודאים שהתמונה מוסתרת
     }
 }

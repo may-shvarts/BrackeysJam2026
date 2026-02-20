@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using DG.Tweening;
 
 /// <summary>
 /// Interactable wheel: when the player activates it (via Enter),
@@ -15,12 +16,19 @@ public class WheelGasSwitch : MonoBehaviour
     [SerializeField] private float fadeDuration = 0.25f; 
     [SerializeField] private bool clearParticlesAtEnd = true;
 
+    [Header("Wheel Rotation Settings")]
+    [SerializeField] private float rotationDuration = 3f;
+    [SerializeField] private float rotationAmount = -360f;
+    
     private bool used = false;
     private Coroutine fadeRoutine;
 
     private float _initialEmissionRate;
+    private Quaternion _initialRotation;
     private void Start()
     {
+        _initialRotation = transform.rotation;
+        
         if (gasVfx != null)
         {
             _initialEmissionRate = gasVfx.emission.rateOverTimeMultiplier;
@@ -39,6 +47,8 @@ public class WheelGasSwitch : MonoBehaviour
     private void ResetGas()
     {
         used = false;
+        transform.DOKill();
+        transform.rotation = _initialRotation;
         if (fadeRoutine != null)
         {
             StopCoroutine(fadeRoutine);
@@ -61,7 +71,9 @@ public class WheelGasSwitch : MonoBehaviour
         used = true;
 
         EventManagement.OnGasWheelActivated?.Invoke();
-
+        transform.DORotate(new Vector3(0, 0, rotationAmount), rotationDuration, RotateMode.FastBeyond360)
+            .SetRelative(true)
+            .SetEase(Ease.InOutQuad);
         // Disable hazard immediately (so player stops taking damage right away)
         if (gasTrigger != null)
             gasTrigger.enabled = false;

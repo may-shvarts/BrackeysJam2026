@@ -9,33 +9,57 @@ public class InteractableObject : MonoBehaviour
     [Header("Interaction Settings")]
     [Tooltip("התמונה שתופיע אחרי הלחיצה")]
     [SerializeField] private Sprite newSprite; 
+    [SerializeField] private bool isWinActivator;
     
-    private SpriteRenderer spriteRenderer;
-    private bool isPlayerInRange = false;
-
+    private SpriteRenderer _spriteRenderer;
+    private Sprite _originalSprite;
+    private bool _isPlayerInRange = false;
+    
+    private Tween _winTween;
+    
     private void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
+        _originalSprite = _spriteRenderer.sprite;
+    }
+    
+    private void OnEnable()
+    {
+        EventManagement.RestartGame += ResetInteractable;
     }
 
+    private void OnDisable()
+    {
+        EventManagement.RestartGame -= ResetInteractable;
+    }
+    
     private void Update()
     {
-        if (isPlayerInRange && Keyboard.current.eKey.wasPressedThisFrame)
+        if (_isPlayerInRange && Keyboard.current.eKey.wasPressedThisFrame)
         {
             EventManagement.OnLightInteracted?.Invoke();
             ChangeSprite();
-            DOVirtual.DelayedCall(2f, () =>
+            if (isWinActivator)
             {
-                EventManagement.OnWin?.Invoke();
-            });
+                _winTween = DOVirtual.DelayedCall(2f, () => { EventManagement.OnWin?.Invoke(); });
+            }
         }
     }
 
+    private void ResetInteractable()
+    {
+        if (_spriteRenderer != null && _originalSprite != null)
+        {
+            _spriteRenderer.sprite = _originalSprite;
+        }
+        _winTween?.Kill();
+    }
+    
     private void ChangeSprite()
     {
         if (newSprite != null)
         {
-            spriteRenderer.sprite = newSprite;
+            _spriteRenderer.sprite = newSprite;
         }
     }
 
@@ -43,7 +67,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerInRange = true;
+            _isPlayerInRange = true;
             EventManagement.OnLightHoverEnter?.Invoke();
         }
     }
@@ -52,7 +76,7 @@ public class InteractableObject : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            isPlayerInRange = false;
+            _isPlayerInRange = false;
             EventManagement.OnLightHoverExit?.Invoke();
         }
     }
