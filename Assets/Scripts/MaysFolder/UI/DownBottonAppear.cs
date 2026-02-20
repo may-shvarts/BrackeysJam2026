@@ -9,7 +9,7 @@ public class DownBottonAppear : MonoBehaviour
     private bool _collectedFirstItem = false;
     private bool _collectedLastItem = false;
     private int _currentFloor = 0;
-    private int _maxFloor = 4;
+    private int _maxFloor = 5;
 
     private String DOWN_BOTTON_TAG = "DownBotton"; 
     private String UP_BOTTON_TAG = "UpBotton"; 
@@ -79,8 +79,49 @@ public class DownBottonAppear : MonoBehaviour
         _currentFloor =  floor;
         UpdateVisibility();
     }
-
-
+    private void UpdateVisibility()
+    {
+        if (_playerOnElevator && !_elevatorMoving)
+        {
+            if (this.gameObject.CompareTag(DOWN_BOTTON_TAG) && _currentFloor > 0)
+            {
+                ShowObject();
+            }
+            else if (this.gameObject.CompareTag(UP_BOTTON_TAG))
+            {
+                // קומות ביניים (1 עד maxFloor - 1) - מראה כפתור עלייה תמיד
+                if (_currentFloor > 0 && _currentFloor < _maxFloor)
+                {
+                    ShowObject();
+                }
+                // קומת הקרקע (0) - מראה כפתור רק אם נאסף החפץ הראשון
+                else if (_currentFloor == 0 && _collectedFirstItem)
+                {
+                    ShowObject();
+                }
+                // קומת המקסימום המקורית (maxFloor) - מראה כפתור עלייה רק אם נאסף החפץ האחרון!
+                else if (_currentFloor == _maxFloor && _collectedLastItem)
+                {
+                    ShowObject();
+                }
+                // אם אנחנו בקומה העליונה החדשה (maxFloor + 1), או שהתנאים למעלה לא התקיימו
+                else
+                {
+                    HideObject();
+                }
+            }
+            // מונע מהכפתור להישאר דלוק אם התגים לא מתאימים או במצב אחר
+            else if (!this.gameObject.CompareTag(DOWN_BOTTON_TAG)) 
+            {
+                HideObject();
+            }
+        }
+        else
+        {
+            HideObject();
+        }
+    }
+/*
     private void UpdateVisibility()
     {
         if (_playerOnElevator && !_elevatorMoving)
@@ -107,7 +148,7 @@ public class DownBottonAppear : MonoBehaviour
             HideObject();
         }
     }
-
+*/
     private void HideObject()
     {
         if (_uiImage != null && _uiImage.enabled)

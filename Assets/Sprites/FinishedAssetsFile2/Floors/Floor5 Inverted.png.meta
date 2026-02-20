@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: ee8d43a97d157e342b37324e3bafe110
+guid: 6390319f60da2a742bb14e9974d1cf7d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7459372945078749124
-    second: Smoke-Effect-Free-PNG-Image (1)_0
+      213: -7307812718697128877
+    second: Floor5 Inverted_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -84,7 +84,59 @@ TextureImporter:
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
+    buildTarget: iOS
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
     buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
@@ -100,13 +152,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Smoke-Effect-Free-PNG-Image (1)_0
+      name: Floor5 Inverted_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 25
-        width: 282
-        height: 283
+        x: 0
+        y: 0
+        width: 1920
+        height: 1080
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +167,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c38fb61f3dbfa7890800000000000000
-      internalID: -7459372945078749124
+      spriteID: 35cd9f00d0f659a90800000000000000
+      internalID: -7307812718697128877
       vertices: []
       indices: 
       edges: []
@@ -135,7 +187,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Smoke-Effect-Free-PNG-Image (1)_0: -7459372945078749124
+      Floor5 Inverted_0: -7307812718697128877
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

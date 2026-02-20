@@ -123,7 +123,7 @@ public class ElevatorController : MonoBehaviour
             // If on max floor (4) and can enter last door, trigger Game Over instead of moving
             if (currentFloor == maxFloor && _canEnterLastDoor)
             {
-                EventManagement.OnWin?.Invoke();
+                StartCoroutine(MoveElevatorSequence(1));
                 return; // Stop here, no elevator movement
             }
             else if (currentFloor < maxFloor)
