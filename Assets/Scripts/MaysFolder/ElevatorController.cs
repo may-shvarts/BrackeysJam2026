@@ -196,12 +196,14 @@ public class ElevatorController : MonoBehaviour
     {
         if (!other.CompareTag(playerTag) || _isMoving) return;
         
+        Debug.Log($"Trigger Enter! Floor: {currentFloor}, MaxFloor: {maxFloor}, CanEnterLast: {_canEnterLastDoor}");
+        
         Debug.Log(_canEnterFirstDoor);
         //Block door opening / entry on Floor 0 if item not collected
         if (currentFloor == 0 && !_canEnterFirstDoor) return;
 
         //Block door opening / entry on Max Floor if last item not collected
-        if (currentFloor == maxFloor && !_canEnterLastDoor) return;
+        //if (currentFloor == maxFloor && !_canEnterLastDoor) return;
         
         _isPlayerInside  = true;
         _playerTransform = other.transform;
