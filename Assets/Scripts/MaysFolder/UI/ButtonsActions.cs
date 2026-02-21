@@ -3,30 +3,24 @@ using UnityEngine;
 
 public class ButtonsActions : MonoSingleton<ButtonsActions>
 {
-    [SerializeField] private GameObject firstStartScreenUI; 
-    [SerializeField] private GameObject secondStartScreenUI;
+    [SerializeField] private GameObject startScreenUI; // הפאנל היחיד למסך הפתיחה
     [SerializeField] private GameObject pauseMenuUI;
     private bool _ableToPause = false;
 
     private void Awake()
     {
         _ableToPause = false;
-        EnableFirstScreen();
+        EnableStartScreen();
         DisablePauseMenu();
         Time.timeScale = 0f;
         EventManagement.OnMainMenuActive?.Invoke();
     }
-    private void EnableFirstScreen()
+    
+    private void EnableStartScreen()
     {
-        if (firstStartScreenUI != null) firstStartScreenUI.SetActive(true);
-        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(false);
+        if (startScreenUI != null) startScreenUI.SetActive(true);
     }
 
-    public void GoToSecondScreen()
-    {
-        if (firstStartScreenUI != null) firstStartScreenUI.SetActive(false);
-        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(true);
-    }
     private void EnablePauseMenu()
     {
         if (pauseMenuUI != null)
@@ -34,6 +28,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
             pauseMenuUI.SetActive(true);
         }
     }
+    
     private void DisablePauseMenu()
     {
         if (pauseMenuUI != null)
@@ -44,7 +39,8 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     
     public void StartGame()
     {
-        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(false);
+        // מכבים את מסך הפתיחה היחיד כשמתחילים לשחק
+        if (startScreenUI != null) startScreenUI.SetActive(false);
         DisablePauseMenu();
         
         EventManagement.RestartGame?.Invoke();
@@ -86,7 +82,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         EventManagement.OnMainMenuActive?.Invoke();
         Time.timeScale = 0f;
         DisablePauseMenu();
-        EnableFirstScreen();
+        EnableStartScreen(); // מחזירים את מסך הפתיחה
         _ableToPause = false;
     }
     
@@ -94,8 +90,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     {
         Time.timeScale = 0f;
         DisablePauseMenu();
-        if (firstStartScreenUI != null) firstStartScreenUI.SetActive(false);
-        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(false);
+        if (startScreenUI != null) startScreenUI.SetActive(false);
         _ableToPause = false;
     }
     
