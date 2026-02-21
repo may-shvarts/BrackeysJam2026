@@ -3,31 +3,29 @@ using UnityEngine;
 
 public class ButtonsActions : MonoSingleton<ButtonsActions>
 {
-    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject firstStartScreenUI; 
+    [SerializeField] private GameObject secondStartScreenUI;
     [SerializeField] private GameObject pauseMenuUI;
     private bool _ableToPause = false;
 
     private void Awake()
     {
         _ableToPause = false;
-        EnableMainMenu();
+        EnableFirstScreen();
         DisablePauseMenu();
         Time.timeScale = 0f;
         EventManagement.OnMainMenuActive?.Invoke();
     }
-    private void EnableMainMenu()
+    private void EnableFirstScreen()
     {
-        if (mainMenuUI != null)
-        {
-            mainMenuUI.SetActive(true);
-        }
+        if (firstStartScreenUI != null) firstStartScreenUI.SetActive(true);
+        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(false);
     }
-    private void DisableMainMenu()
+
+    public void GoToSecondScreen()
     {
-        if (mainMenuUI != null)
-        {
-            mainMenuUI.SetActive(false);
-        }
+        if (firstStartScreenUI != null) firstStartScreenUI.SetActive(false);
+        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(true);
     }
     private void EnablePauseMenu()
     {
@@ -46,8 +44,8 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     
     public void StartGame()
     {
+        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(false);
         DisablePauseMenu();
-        DisableMainMenu();
         
         EventManagement.RestartGame?.Invoke();
         EventManagement.OnGameplayStarted?.Invoke();
@@ -60,7 +58,6 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         if (!_ableToPause) return;
         _ableToPause = false;
         EnablePauseMenu();
-        DisableMainMenu();
         Time.timeScale = 0f;
         EventManagement.OnGamePaused?.Invoke();
     }
@@ -89,7 +86,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         EventManagement.OnMainMenuActive?.Invoke();
         Time.timeScale = 0f;
         DisablePauseMenu();
-        EnableMainMenu();
+        EnableFirstScreen();
         _ableToPause = false;
     }
     
@@ -97,7 +94,8 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     {
         Time.timeScale = 0f;
         DisablePauseMenu();
-        DisableMainMenu();
+        if (firstStartScreenUI != null) firstStartScreenUI.SetActive(false);
+        if (secondStartScreenUI != null) secondStartScreenUI.SetActive(false);
         _ableToPause = false;
     }
     
