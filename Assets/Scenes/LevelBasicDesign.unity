@@ -24213,6 +24213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee830e8a6b7741ec91fa8c93fdde3588, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationDuration: 0.3
+  stretchPunch: {x: -0.3, y: 0.3, z: 0}
+  squashPunch: {x: 0.3, y: -0.3, z: 0}
+  flickerTimePerFlash: 0.3
+  flickerLoops: 6
 --- !u!95 &1802469451
 Animator:
   serializedVersion: 7

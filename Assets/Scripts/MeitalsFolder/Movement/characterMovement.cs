@@ -26,6 +26,7 @@ public class characterMovement : MonoBehaviour
     private bool _isGrounded;
     private bool _canMove = true;
     public float HorizontalInput => _moveInput.x;
+    public bool IsGrounded => _isGrounded;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
