@@ -13,6 +13,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         EnableMainMenu();
         DisablePauseMenu();
         Time.timeScale = 0f;
+        EventManagement.OnMainMenuActive?.Invoke();
     }
     private void EnableMainMenu()
     {
@@ -49,6 +50,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         DisableMainMenu();
         
         EventManagement.RestartGame?.Invoke();
+        EventManagement.OnGameplayStarted?.Invoke();
         _ableToPause = true;
         Time.timeScale = 1f;
     }
@@ -60,6 +62,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         EnablePauseMenu();
         DisableMainMenu();
         Time.timeScale = 0f;
+        EventManagement.OnGamePaused?.Invoke();
     }
 
     public void ResumeGame()
@@ -67,12 +70,15 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
         DisablePauseMenu();
         _ableToPause = true;
         Time.timeScale = 1f;
+        
+        EventManagement.OnGameResumed?.Invoke();
     }
 
     public void RestartGame()
     {
         Time.timeScale = 1f;
         EventManagement.RestartGame?.Invoke();
+        EventManagement.OnGameplayStarted?.Invoke();
         DisablePauseMenu();
         _ableToPause = true;
     }
@@ -80,6 +86,7 @@ public class ButtonsActions : MonoSingleton<ButtonsActions>
     public void ExitGame()
     {
         EventManagement.RestartGame?.Invoke();
+        EventManagement.OnMainMenuActive?.Invoke();
         Time.timeScale = 0f;
         DisablePauseMenu();
         EnableMainMenu();

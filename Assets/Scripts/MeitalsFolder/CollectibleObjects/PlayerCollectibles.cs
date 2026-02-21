@@ -19,6 +19,7 @@ public class PlayerCollectibles : MonoBehaviour
 
     public void Collect()
     {
+        EventManagement.OnItemCollected?.Invoke();
         collectedCount++;
 
         Debug.Log("Collected items: " + collectedCount);

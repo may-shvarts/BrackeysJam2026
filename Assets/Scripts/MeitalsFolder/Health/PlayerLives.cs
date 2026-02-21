@@ -74,6 +74,7 @@ public class PlayerLives : MonoBehaviour
             _currentLives = MaxLives;
             EventManagement.OnLivesChanged?.Invoke(_currentLives);
         }
+        EventManagement.OnTakingDamage?.Invoke();
     }
 
     private void Restart()

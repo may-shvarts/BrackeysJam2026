@@ -47,4 +47,12 @@ public static class EventManagement
     public static Action OnLightHoverEnter;
     public static Action OnLightHoverExit;
     public static Action OnLightInteracted;
+    
+    //Events for sound:
+    public static Action OnTakingDamage;
+    public static Action OnItemCollected;
+    public static Action OnMainMenuActive;
+    public static Action OnGameplayStarted;
+    public static Action OnGamePaused;
+    public static Action OnGameResumed;
 }
