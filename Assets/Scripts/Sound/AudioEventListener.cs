@@ -30,12 +30,13 @@ public class AudioEventListener : MonoBehaviour
     private Audio _currentPauseMusic;
     private Audio _currentGasSound;
     private Audio _currentWinMusic;
+    
+    private bool _isGasActive = true;
     //private Tween _respawnTween; //track the respawn sound
     private void OnEnable()
     {
         //Gas & Wheel InterActives:
         EventManagement.OnGasWheelActivated += PlayWheelSound;
-        EventManagement.OnElevatorArrived += PlayGasSound;
         //ElevatorMovement:
         EventManagement.OnElevatorPrepareToMove += PlayElevatorSound;
         EventManagement.OnElevatorArrived += HandleElevatorArrived;
@@ -57,13 +58,14 @@ public class AudioEventListener : MonoBehaviour
         EventManagement.OnWin += PlayOnWinClip;
 
         EventManagement.OnElevatorEnter += PlayElevatorDoorSound;
+        
+        EventManagement.RestartGame += ResetGasState;
     }
 
     private void OnDisable()
     {
         //Gas & Wheel InterActives:
         EventManagement.OnGasWheelActivated -= PlayWheelSound;
-        EventManagement.OnElevatorArrived -= PlayGasSound;
         //ElevatorMovement:
         EventManagement.OnElevatorPrepareToMove -= PlayElevatorSound;
         EventManagement.OnElevatorArrived -= HandleElevatorArrived;
@@ -85,6 +87,8 @@ public class AudioEventListener : MonoBehaviour
         EventManagement.OnWin -= PlayOnWinClip;
         
         EventManagement.OnElevatorEnter -= PlayElevatorDoorSound;
+        
+        EventManagement.RestartGame -= ResetGasState;
     }
 
     private void StopWinMusicIfNeeded()
@@ -197,12 +201,21 @@ public class AudioEventListener : MonoBehaviour
     private void PlayWheelSound()
     {
         SoundManager.Instance.PlaySound(wheelTurnClip);
+        
+        _isGasActive = false;
+        StopGasSoundIfNeeded(); 
     }
 
+    private void ResetGasState()
+    {
+        _isGasActive = true;
+    }
     private void PlayGasSound(int i)
     {
-        if (i == gasFloor)
+        Debug.Log("Checking to play gas sound");
+        if (i == gasFloor && _isGasActive)
         {
+            Debug.Log("Activated gas sound");
             // אם הסאונד עדיין לא מתנגן, נפעיל אותו בלופ
             if (_currentGasSound == null)
             {
@@ -214,6 +227,7 @@ public class AudioEventListener : MonoBehaviour
     {
         if (_currentGasSound != null)
         {
+            Debug.Log("Deleted Gas sound");
             _currentGasSound.StopAndReturn();
             _currentGasSound = null;
         }

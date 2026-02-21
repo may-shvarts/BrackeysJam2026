@@ -22,6 +22,7 @@ public class characterMovement : MonoBehaviour
     private float _jumpBufferCounter;
     private bool _isGrounded;
     private bool _canMove = true;
+    public float HorizontalInput => _moveInput.x;
     private void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
