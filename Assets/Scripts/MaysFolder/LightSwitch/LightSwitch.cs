@@ -10,6 +10,8 @@ public class InteractableObject : MonoBehaviour
     [Tooltip("התמונה שתופיע אחרי הלחיצה")]
     [SerializeField] private Sprite newSprite; 
     [SerializeField] private bool isWinActivator;
+    [SerializeField] private Transform originalLocation;
+    [SerializeField] private Transform newSpriteLocation;
     
     private SpriteRenderer _spriteRenderer;
     private Sprite _originalSprite;
@@ -51,6 +53,7 @@ public class InteractableObject : MonoBehaviour
         if (_spriteRenderer != null && _originalSprite != null)
         {
             _spriteRenderer.sprite = _originalSprite;
+            this.transform.position = originalLocation.position;
         }
         _winTween?.Kill();
     }
@@ -60,6 +63,7 @@ public class InteractableObject : MonoBehaviour
         if (newSprite != null)
         {
             _spriteRenderer.sprite = newSprite;
+            this.transform.position = newSpriteLocation.position;
         }
     }
 

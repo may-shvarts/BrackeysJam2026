@@ -15,7 +15,10 @@ public class characterMovement : MonoBehaviour
 
     [Header("Jump Feel")]
     [SerializeField] private float jumpBufferTime = 0.12f;
+    [SerializeField] private float fallMultiplier = 2.5f;      // faster fall
+    [SerializeField] private float lowJumpMultiplier = 2f;     // short hop if button released early
 
+    private bool _jumpHeld;
     private Rigidbody2D _rb;
     private Vector2 _moveInput;
 
@@ -66,6 +69,7 @@ public class characterMovement : MonoBehaviour
     private void OnJump(InputValue value)
     {
         if (!_canMove) return;
+        _jumpHeld = value.isPressed;
         if (value.isPressed)
             _jumpBufferCounter = jumpBufferTime;
     }
@@ -84,5 +88,14 @@ public class characterMovement : MonoBehaviour
 
         if (_jumpBufferCounter > 0f)
             _jumpBufferCounter -= Time.fixedDeltaTime;
+        // Better jump arc
+        if (_rb.linearVelocity.y < 0)
+        {
+            _rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier - 1) * Time.fixedDeltaTime;
+        }
+        else if (_rb.linearVelocity.y > 0 && !_jumpHeld)
+        {
+            _rb.linearVelocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier - 1) * Time.fixedDeltaTime;
+        }
     }
 }
