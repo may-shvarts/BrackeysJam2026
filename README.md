@@ -11,15 +11,15 @@
 Sight Unseen is a game about a blind girl exploring an abandoned building, she can't see the real world, but she has psychic prowess allowing her to see the edgy and sketchy world that the normal human-being's not able to see.]
 
 ## ⌨️ Controls
-* * **Mouse Movement**  To control your third eye
-* * **A, D** To move sideways
-* * **Spacebar:** To jump
-* * **W, S, E** for different interactions
+* **Mouse Movement**  To control your third eye
+* **A, D** To move sideways
+* **Spacebar:** To jump
+* **W, S, E** for different interactions
 
 ## 🛠️ Built With
 * **Game Engine:** [Unity]
 * **Language:** [C#]
 
-## Credits
-* * **Art by Shon Krich and Snir Lerner**
-* * **Prorgrammed by May Shvarts and Meital Lubarski**
+## 🤝 Credits
+* **Art by Shon Krich and Snir Lerner**
+* **Prorgrammed by May Shvarts and Meital Lubarski**
